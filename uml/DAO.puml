@@ -1,0 +1,36 @@
+@startuml
+class Player{
+    - rank:int
+    - score:int
+    - username:String
+    - date:Date
+
+    + Player(int rank,int score,String username,Date date)
+    + getRank(int rank):void
+    + setRank(int rank):void
+    + getScore(int score):void
+    + getUsername(String username):void
+    + getDate(Date date):void
+}
+class io{
+    + fileToObject(File file):ArrayList<Player>
+    + objectToFile(ArrayList<Player> Players, File file):void
+}
+
+interface PlayerDAO{
+    + findPlayer(int rank):Player
+    + doAdd(Player player):void
+    + doDelet(int rank):void
+    + getAllPlayer:ArrayList<Player>
+}
+class PlayerDAOImpl{
+    + Players:List<Player>
+    + findPlayer(int rank):Player
+    + doAdd(Player player):void
+    + doDelet(int rank):void
+    + getAllPlayer():List<Player>
+}
+io <.. PlayerDAOImpl
+PlayerDAOImpl <|.. PlayerDAO
+Player <-- PlayerDAOImpl
+@enduml

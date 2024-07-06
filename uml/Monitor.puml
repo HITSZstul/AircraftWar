@@ -1,0 +1,85 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+interface bomb_monitor{
+    + update_bomb():void
+}
+class bomb_publisher{
+    - Monitor:List<bomb_monitor>
+    - {static} Bomb_publisher:bomb_publisher
+    - Bomb_publisher():void
+    + {static}getBomb_publisher():bomb_publisher
+    + addmonitor(bomb_monitor):void
+    + removeMonitor():void
+    + NotifyAll():void
+}
+abstract class AbstractFlyingObject
+{
+    - locationX:int
+    - locationY:int
+    - speedX:int
+    - speedY:int
+    - image:BufferedImage
+    - width:int
+    - height:int
+    - isValid:boolean
+
+    + AbstractFlyingObject(int locationX, int locationY, int speedX, int speedY)
+    + forward():void
+    + crash(AbstractFlyingObject flyingObject):boolean
+    + setLocation(double locationX, double locationY):void
+    + getLocationX():int
+    + getLocationY():int
+    + getSpeedY():int
+    + getImage():BufferedImage
+    + getWidth():int
+    + getHeight():int
+    + notValid():boolean
+    + vanish():void
+}
+class bomb{
+    + bomb(int locationX, int locationY, int speedX, int speedY)
+    + activate(AbstractAircraft aircraft)
+}
+class MobEnemy {
+    + MobEnemy(int locationX, int locationY, int speedX, int speedY, int hp)
+    + forward():void
+    + shoot():List<BaseBullet>
+    + update_bomb():void
+}
+class Elite{
+    + Elite(int locationX, int locationY, int speedX, int speedY, int hp)
+    + forward():void
+    + shoot():List<BaseBullet>
+    + fall():supply
+    + update_bomb():void
+}
+class ElitePlus{
+    + ElitePlus(int locationX, int locationY, int speedX, int speedY, int hp)
+    + forward():void
+    + shoot():List<BaseBullet>
+    + fall():supply
+    + update_bomb():void
+}
+class EnemyBullet {
+    + EnemyBullet(int locationX, int locationY,
+     int speedX, int speedY, int power)
+    + update_bomb():void
+}
+abstract class BaseBullet
+{
+    - power:int
+    + BaseBullet(int locationX, int locationY, int speedX, int speedY, int power)
+    + forward():void
+	+ getPower():int
+}
+bomb_monitor <|.. AbstractFlyingObject
+bomb_publisher o--> bomb_monitor
+bomb --> bomb_publisher
+BaseBullet <|-- EnemyBullet
+AbstractFlyingObject <|-- AbstractAircraft
+AbstractFlyingObject <|-- BaseBullet
+AbstractAircraft <|-- MobEnemy
+MobEnemy <|-- Elite
+MobEnemy <|-- ElitePlus
+@enduml

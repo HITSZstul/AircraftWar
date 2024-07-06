@@ -1,0 +1,60 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+interface enemy_f{
+    +{static}createEnemy():AbstractAircraft
+}
+class Mob_f{
+    + createEnemy():AbstractAircraft
+}
+class Elite_f{
+     + createEnemy():AbstractAircraft
+}
+class ElitePlus_f{
+     + createEnemy():AbstractAircraft
+}
+class Boss_f{
+     + createEnemy():AbstractAircraft
+}
+class Elite{
+    - shootNum:int
+    - power:int
+    - direction:int
+
+    + Elite(int locationX, int locationY, int speedX, int speedY, int hp, int type)
+    + forward():void
+    + shoot():List<BaseBullet>
+    + fall():supply
+}
+class MobEnemy {
+    + MobEnemy(int locationX, int locationY, int speedX, int speedY, int hp, int type)
+    + forward():void
+    + shoot():List<BaseBullet>
+    + fall():supply
+}
+class ElitePlus{
+    + ElitePlus(int locationX, int locationY, int speedX, int speedY, int hp)
+    + forward():void
+    + shoot():List<BaseBullet>
+    + fall():supply
+}
+class Boss{
+    + Boss(int locationX, int locationY, int speedX, int speedY, int hp,boolean music)
+    + forward():void
+    + shoot():List<BaseBullet>
+    + fall():supply
+}
+ MobEnemy <|-- Elite
+ MobEnemy <|-- Boss
+ MobEnemy <|-- ElitePlus
+
+Mob_f..|>enemy_f
+Elite_f..|>enemy_f
+ElitePlus_f..|>enemy_f
+Boss_f..|>enemy_f
+
+Mob_f..>MobEnemy
+Elite_f..>Elite
+ElitePlus_f..>ElitePlus
+Boss_f..>Boss
+@enduml

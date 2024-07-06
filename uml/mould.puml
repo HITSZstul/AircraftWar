@@ -1,0 +1,32 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+abstract class Game{
+    + Game(boolean music):void
+    # action():void
+    # time_update():void
+    # bombAction():void
+    # bulletsMoveAction():void
+    # aircraftsMoveAction():void
+    # crashCheckAction():void
+    # postProcessAction():void
+}
+class Game_easy{
+    # paint():void
+    # time_update():void
+    + Game_easy(boolean music):void
+}
+class Game_mid{
+    # paint():void
+    # time_update():void
+    + Game_mid(boolean music):void
+}
+class Game_hard{
+    # paint():void
+    # time_update():void
+    + Game_hard(boolean music):void
+}
+Game<|--Game_easy
+Game<|--Game_mid
+Game<|--Game_hard
+
+@enduml

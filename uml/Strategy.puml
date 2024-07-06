@@ -1,0 +1,62 @@
+@startuml
+class HeroAircraft {
+    - shootNum:int
+    - power:int
+    - direction:int
+    -{static} HeroAircraft:Hero
+    - HeroAircraft(int locationX, int locationY, int speedX, int speedY, int hp)
+    - strategy:Strategy
+
+    + setStrategy():void
+    + getStrategy():Strategy
+    + changeStrategy():void
+    +{static}getHero():HeroAircraft
+    + forward():void
+    + shoot():List<BaseBullet>
+    + update():void
+}
+
+class MobEnemy {
+    + MobEnemy(int locationX, int locationY, int speedX, int speedY, int hp, int type,Strategy strategy)
+    + forward():void
+    + shoot():List<BaseBullet>
+}
+abstract class AbstractAircraft
+{
+	- maxHp:int
+    - hp:int
+    - type:int
+    - strategy Strategy
+
+    + AbstractAircraft(int locationX, int locationY, int speedX, int speedY, int hp)
+    + decreaseHp(int decrease):void
+    + getHp():int
+    + getType():int
+    + {abstract} shoot():List<BaseBullet>
+ }
+
+interface Strategy{
+    + {static} shoot(AbstractAircraft aircraft):List<BaseBullet>
+}
+class shoot_f{
+    + shoot(AbstractAircraft aircraft):List<BaseBullet>
+}
+class shoot_r{
+    + shoot(AbstractAircraft aircraft):List<BaseBullet>
+}
+class shoot_s{
+    + shoot(AbstractAircraft aircraft):List<BaseBullet>
+}
+class shoot_n{
+    + shoot(AbstractAircraft aircraft):List<BaseBullet>
+}
+Strategy <|.. shoot_n
+Strategy <|.. shoot_f
+Strategy <|.. shoot_r
+Strategy <|.. shoot_s
+
+AbstractAircraft <|-- MobEnemy
+AbstractAircraft <|-- HeroAircraft
+MobEnemy o--> Strategy
+HeroAircraft o--> Strategy
+ @enduml

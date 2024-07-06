@@ -1,0 +1,54 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+
+interface supply_f{
+    + {static} createSupply(int x,int y,int sx,int sy):supply
+}
+class Add_f{
+    +{static} createSupply(int x,int y,int sx,int sy):Add
+}
+
+class bomb_f{
+    +{static} createSupply(int x,int y,int sx,int sy):bomb
+}
+class Fire_f{
+    +{static} createSupply(int x,int y,int sx,int sy):Fire
+}
+class Rfire_f{
+    +{static} createSupply(int x,int y,int sx,int sy):Rfire
+}
+supply_f <|.. Add_f
+supply_f <|.. bomb_f
+supply_f <|.. Fire_f
+supply_f <|.. Rfire_f
+Add_f ..> Add
+Fire_f ..> Fire
+bomb_f ..> bomb
+Rfire_f ..> Rfire
+class supply{
+    + supply(int locationX, int locationY, int speedX, int speedY, int type)
+    + forward():void
+    + activate():void
+}
+class Add{
+    + Add(int locationX, int locationY, int speedX, int speedY, int type)
+    + activate():void
+}
+class bomb{
+    + bomb(int locationX, int locationY, int speedX, int speedY, int type)
++ activate():void
+}
+class Fire{
++ activate():void
+    + Fire(int locationX, int locationY, int speedX, int speedY, int type)
+}
+class Rfire{
+    + Rfire(int locationX, int locationY, int speedX, int speedY)
+    + activate(AbstractAircraft aircraft)
+}
+supply <|-- Add
+supply <|-- bomb
+supply <|-- Fire
+supply <|-- Rfire
+@enduml

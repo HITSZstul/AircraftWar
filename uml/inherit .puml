@@ -1,0 +1,195 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+abstract class AbstractFlyingObject
+{
+    - locationX:int
+    - locationY:int
+    - speedX:int
+    - speedY:int
+    - image:BufferedImage
+    - width:int
+    - height:int
+    - isValid:boolean
+
+    + AbstractFlyingObject(int locationX, int locationY, int speedX, int speedY)
+    + forward():void
+    + crash(AbstractFlyingObject flyingObject):boolean
+    + setLocation(double locationX, double locationY):void
+    + getLocationX():int
+    + getLocationY():int
+    + getSpeedY():int
+    + getImage():BufferedImage
+    + getWidth():int
+    + getHeight():int
+    + notValid():boolean
+    + vanish():void
+}
+abstract class AbstractAircraft
+{
+	# maxHp:int
+    # hp:int
+    # shootNum:int
+    # power:int
+    # strategy:Strategy
+
+    + AbstractAircraft(int locationX, int locationY, int speedX, int speedY, int hp)
+    + decreaseHp(int decrease):void
+    + getHp():int
+    + getPower():int
+    + {abstract} shoot():List<BaseBullet>
+ }
+
+
+class HeroAircraft {
+    - strategychange:int
+    - shootNum:int
+    - power:int
+    - direction:int
+    -{static} HeroAircraft:Hero
+    - HeroAircraft(int locationX, int locationY, int speedX, int speedY, int hp)
+    - strategy:Strategy
+
+    + {static}getHero():HeroAircraft
+    + forward():void
+    + shoot():List<BaseBullet>
+    + getstrategychange():int
+    + setStrategy(Strategy strategy):void
+    + changeStrategy(Strategy strategy):void
+    + getStrategy():Strategy
+}
+
+class MobEnemy {
+    + MobEnemy(int locationX, int locationY, int speedX, int speedY, int hp)
+    + forward():void
+    + shoot():List<BaseBullet>
+}
+class Boss{
+    + Boss(int locationX, int locationY, int speedX, int speedY, int hp,boolean music)
+    + forward():void
+    + shoot():List<BaseBullet>
+    + fall():supply
+}
+class Elite{
+    + Elite(int locationX, int locationY, int speedX, int speedY, int hp)
+    + forward():void
+    + shoot():List<BaseBullet>
+    + fall():supply
+}
+class ElitePlus{
+    + ElitePlus(int locationX, int locationY, int speedX, int speedY, int hp)
+    + forward():void
+    + shoot():List<BaseBullet>
+    + fall():supply
+}
+
+AbstractAircraft <|-- MobEnemy
+AbstractAircraft <|-- HeroAircraft
+MobEnemy <|-- Elite
+MobEnemy <|-- Boss
+MobEnemy <|-- ElitePlus
+
+abstract class BaseBullet
+{
+    - power:int
+    + BaseBullet(int locationX, int locationY, int speedX, int speedY, int power)
+    + forward():void
+	+ getPower():int
+}
+
+class HeroBullet {
+    + HeroBullet(int locationX, int locationY,
+     int speedX, int speedY, int power)
+}
+
+class EnemyBullet {
+    + EnemyBullet(int locationX, int locationY,
+     int speedX, int speedY, int power)
+}
+BaseBullet <|-- HeroBullet
+BaseBullet <|-- EnemyBullet
+
+class supply{
+    + supply(int locationX, int locationY, int speedX, int speedY, int type)
+    + forward():void
+}
+class Add{
+    + Add(int locationX, int locationY, int speedX, int speedY)
+    + activate(AbstractAircraft aircraft)
+}
+class bomb{
+    + bomb(int locationX, int locationY, int speedX, int speedY)
+    + activate(AbstractAircraft aircraft)
+}
+class Fire{
+    + Fire(int locationX, int locationY, int speedX, int speedY)
+    + activate(AbstractAircraft aircraft)
+}
+class Rfire{
+    + Rfire(int locationX, int locationY, int speedX, int speedY)
+    + activate(AbstractAircraft aircraft)
+}
+AbstractFlyingObject <|-- supply
+supply <|-- Add
+supply <|-- bomb
+supply <|-- Fire
+supply <|-- Rfire
+
+HeroAircraft <.. HeroBullet
+Elite <.. EnemyBullet
+ElitePlus <.. EnemyBullet
+Boss <.. EnemyBullet
+AbstractFlyingObject <|-- AbstractAircraft
+AbstractFlyingObject <|-- BaseBullet
+
+interface supply_f{
+    + {static} createSupply(int x,int y,int sx,int sy):supply
+}
+class Add_f{
+    +{static} createSupply(int x,int y,int sx,int sy):Add
+}
+
+class bomb_f{
+    +{static} createSupply(int x,int y,int sx,int sy):bomb
+}
+class Fire_f{
+    +{static} createSupply(int x,int y,int sx,int sy):Fire
+}
+class Rfire_f{
+    +{static} createSupply(int x,int y,int sx,int sy):Rfire
+}
+
+supply_f <|.. Add_f
+supply_f <|.. bomb_f
+supply_f <|.. Fire_f
+supply_f <|.. Rfire_f
+
+Add_f ..> Add
+Fire_f ..> Fire
+bomb_f ..> bomb
+Rfire_f ..> Rfire
+
+interface Strategy{
+    + {static} shoot(AbstractAircraft aircraft):List<BaseBullet>
+}
+class shoot_f{
+    + shoot(AbstractAircraft aircraft):List<BaseBullet>
+}
+class shoot_r{
+    + shoot(AbstractAircraft aircraft):List<BaseBullet>
+}
+class shoot_s{
+    + shoot(AbstractAircraft aircraft):List<BaseBullet>
+}
+class shoot_n{
+    + shoot(AbstractAircraft aircraft):List<BaseBullet>
+}
+Strategy <|.. shoot_n
+Strategy <|.. shoot_f
+Strategy <|.. shoot_r
+Strategy <|.. shoot_s
+
+
+MobEnemy o--> Strategy
+HeroAircraft o--> Strategy
+@enduml
