@@ -49,5 +49,4 @@ public class MobEnemy extends AbstractAircraft {
     public List<supply> fall() {
         return new LinkedList<>();
     }
-
 }
