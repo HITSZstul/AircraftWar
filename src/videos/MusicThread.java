@@ -6,17 +6,15 @@ import javax.sound.sampled.*;
 import javax.sound.sampled.DataLine.Info;
 
 public class MusicThread extends Thread {
-
-
     //音频文件名
-    private String filename;
+    private final String filename;
 //    private AudioFormat audioFormat;
 //    private byte[] samples;
     private static boolean stop = false;
     public boolean isStop(){
         return stop;
     }
-    private boolean loop;
+    private final boolean loop;
 //    public void setLoop(boolean loop){
 //        this.loop = loop;
 //    }
@@ -104,7 +102,6 @@ public class MusicThread extends Thread {
     public void stopping(boolean stop){
         MusicThread.stop = stop;
     }
-
     public void run(){
         File wavFile = new File(filename);
         try{
@@ -121,11 +118,7 @@ public class MusicThread extends Thread {
             else{
                 clip.start();
             }
-        } catch (UnsupportedAudioFileException e) {
-            throw new RuntimeException(e);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        } catch (LineUnavailableException e) {
+        } catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
             throw new RuntimeException(e);
         }
     }

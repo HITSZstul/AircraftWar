@@ -62,7 +62,7 @@ public class Boss extends MobEnemy {
     @Override
     public List<BaseBullet> shoot() {
         List<BaseBullet> res = new LinkedList<>();
-        res.addAll(strategy.shoot(this));
+        res.addAll(strategy.shoot(this));//将引用传递给strategy，进行子弹发射
         return res;
     }
     public List<supply> fall() {
