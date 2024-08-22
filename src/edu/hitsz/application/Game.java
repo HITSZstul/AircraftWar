@@ -3,9 +3,6 @@ package edu.hitsz.application;
 import edu.hitsz.basic.bomb_publisher;
 import edu.hitsz.supply.bomb;
 import videos.MusicThread;
-import edu.hitsz.DAO.Player;
-import edu.hitsz.DAO.PlayerDAO;
-import edu.hitsz.DAO.PlayerDaoImpl;
 import edu.hitsz.aircraft.*;
 import edu.hitsz.bullet.BaseBullet;
 import edu.hitsz.basic.AbstractFlyingObject;
@@ -17,8 +14,6 @@ import org.apache.commons.lang3.concurrent.BasicThreadFactory;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.io.IOException;
-import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.List;
 import java.util.concurrent.*;
@@ -51,8 +46,8 @@ public abstract class Game extends JPanel {
     /**
      * 当前得分
      */
-    protected static int score = 0;
-    protected static int cutscore=0;
+    protected int score = 0;
+    protected int cutscore=0;
 
     /**
      * 当前时刻
@@ -66,7 +61,7 @@ public abstract class Game extends JPanel {
     protected int cycleTime = 0;
     protected int cycleTime_e = 0;
     protected int cycleDuration_e = 600;
-    protected int upgrate_enemy = 0;
+    protected int upgrade_enemy = 0;
     protected int time_limit = 500;
     protected int more_enemy = 10000;
     protected int Boss_limit = 1000;
@@ -113,7 +108,7 @@ public abstract class Game extends JPanel {
         // 定时任务：绘制、对象产生、碰撞判定、击毁及结束判定
         Runnable task = () -> {
             time += timeInterval;
-            upgrate_enemy +=timeInterval;
+            upgrade_enemy +=timeInterval;
             more_enemy +=timeInterval;
             // 周期性执行（控制频率）
             time_update();

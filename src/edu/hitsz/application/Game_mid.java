@@ -36,10 +36,10 @@ public class Game_mid extends Game{
     @Override
     public void time_update(){
         if (timeCountAndNewCycleJudge_enemy()) {
-            if(upgrate_enemy >=time_limit){
+            if(upgrade_enemy >=time_limit){
                 cycleDuration_e/= (int) (1+(double)time/1000000);
                 System.out.println("敌机射击频率增加！敌机属性提升倍率："+(1+(double)time/100000)+"    当前敌机最大数量:"+(int)(enemyMaxNumber)+"    精英机产生概率:"+(0.2+(double)time/1000000));
-                upgrate_enemy = 0;
+                upgrade_enemy = 0;
                 Factory.setRage_upgrade(1+(double)time/1000000);
                 Factory.setRage_of_elite(0.8-(double)time/1000000);
                 Factory.setRage_of_mob(0.8-(double)time/500000);
