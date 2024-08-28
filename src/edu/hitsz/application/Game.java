@@ -1,6 +1,7 @@
 package edu.hitsz.application;
 
 import edu.hitsz.basic.bomb_publisher;
+import edu.hitsz.card.SimpleTable;
 import edu.hitsz.supply.bomb;
 import videos.MusicThread;
 import edu.hitsz.aircraft.*;
@@ -14,6 +15,7 @@ import org.apache.commons.lang3.concurrent.BasicThreadFactory;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.io.IOException;
 import java.util.*;
 import java.util.List;
 import java.util.concurrent.*;
@@ -130,9 +132,19 @@ public abstract class Game extends JPanel {
 
             // 游戏结束检查英雄机是否存活
             if (heroAircraft.getHp() <= 0) {
-                new MusicThread("src/videos/game_over.wav",false);
-                load_user load = new load_user(score,level);
-                Main.cardPanel.add(load.getMainPanel());
+                new MusicThread("src/videos/game_over.wav", false);
+                SimpleTable table;
+                try {
+                    table = new SimpleTable(level);
+                } catch (IOException | ClassNotFoundException e) {
+                    throw new RuntimeException(e);
+                }
+                Main.cardPanel.add(table.getMainPanel());
+                try {
+                    table.input(score, level);
+                } catch (IOException | ClassNotFoundException e) {
+                    throw new RuntimeException(e);
+                }
                 Main.cardLayout.last(Main.cardPanel);
 //                music_bgm.stopping(true);
                 //跳转到输入username窗口

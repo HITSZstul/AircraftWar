@@ -11,13 +11,14 @@ import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class SimpleTable {
     private JPanel MainPanel;
     private JPanel TopPanel;
     private JScrollPane tableScrollPane;
     private JTable scoretable;
-    private JLabel headerLabel;
+    private JLabel levelLabel;
     private JButton delect;
 
     private int level;
@@ -28,6 +29,13 @@ public class SimpleTable {
     String[][] playertable =  null;
 
     public SimpleTable(int level) throws IOException, ClassNotFoundException {
+        if(level==0){
+            levelLabel.setText("难度：EASY");
+        }else if (level==1){
+            levelLabel.setText("难度：MEDIUM");
+        }else if (level==2){
+            levelLabel.setText("难度：HARD");
+        }
         demo = new PlayerDaoImpl();
         this.level = level;
         get_table();
@@ -100,6 +108,33 @@ public class SimpleTable {
         frame.setVisible(true);
     }
 
+    public void input(int score, int level) throws IOException, ClassNotFoundException {
+        // 弹出一个带有输入框的对话框
+        String input = null;
+        input = JOptionPane.showInputDialog(null, "游戏结束，您的分数为"+score+"\n"+"请输入名字记录得分：");
+        System.out.println(input);
+        if (input == null || input.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "未成功保存数据", "warning",JOptionPane.WARNING_MESSAGE);
+        }else{
+            //获取当前时间
+            Date date = new Date();
+            SimpleDateFormat formatter = new SimpleDateFormat("MM-dd HH:mm");
+            Player player = new Player(0,score,input,date);
+            System.out.println(player.getUsername());
+//            User user = new User();
+//            user.setUserName(input);
+//            user.setScore(score);
+//            user.setOverTime(formatter.format(date));
+            //记录数据
+            demo.doAdd(player,level);
+            refresh();
+        }
+    }
+
+    public void refresh() throws IOException, ClassNotFoundException {
+        players = demo.getAllPlayer(level);
+        get_table();
+    }
     public JPanel getMainPanel() {
         return MainPanel;
     }
